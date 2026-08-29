@@ -1,7 +1,8 @@
 -- ============================================================
 -- PRACTICA 2 - Script de importacion de datos
--- Generado a partir de Dataset_Practica2.xlsx
--- Ejecutar como Script (F5) sobre la conexion 'practica2'
+-- Generado automaticamente desde: Dataset_Practica2.xlsx
+-- Fecha de generacion: 2026-08-28 20:04:51
+-- Ejecutar como Script (F5) sobre la conexion de Oracle correspondiente.
 -- Respeta el orden de dependencia de llaves foraneas.
 -- ============================================================
 
@@ -109,7 +110,7 @@ INSERT INTO plaza (id_plaza, especialidad_id, empresa_id, contacto_id) VALUES (5
 INSERT INTO plaza (id_plaza, especialidad_id, empresa_id, contacto_id) VALUES (6, 6, 5, 6);
 INSERT INTO plaza (id_plaza, especialidad_id, empresa_id, contacto_id) VALUES (7, 7, 5, 7);
 
--- 14. colocacion (activo derivado: '1' si estado = Activa (id 1), '0' en otro caso)
+-- 14. colocacion (activo derivado: '1' si estado = Activa, '0' en otro caso)
 INSERT INTO colocacion (id_colocacion, fecha_inicio, fecha_fin, estudiante_id, plaza_id, catedratico_id, estado_id, activo) VALUES (1, TO_DATE('2026-07-01','YYYY-MM-DD'), TO_DATE('2026-08-30','YYYY-MM-DD'), 2024001, 1, 1, 1, '1');
 INSERT INTO colocacion (id_colocacion, fecha_inicio, fecha_fin, estudiante_id, plaza_id, catedratico_id, estado_id, activo) VALUES (2, TO_DATE('2026-07-15','YYYY-MM-DD'), TO_DATE('2026-09-15','YYYY-MM-DD'), 2024002, 3, 2, 1, '1');
 INSERT INTO colocacion (id_colocacion, fecha_inicio, fecha_fin, estudiante_id, plaza_id, catedratico_id, estado_id, activo) VALUES (3, TO_DATE('2025-01-10','YYYY-MM-DD'), TO_DATE('2025-03-10','YYYY-MM-DD'), 2024003, 2, 1, 2, '0');
@@ -155,10 +156,3 @@ INSERT INTO evaluacion_criterio (evaluacion_id, criterio_id, puntaje) VALUES (4,
 INSERT INTO evaluacion_criterio (evaluacion_id, criterio_id, puntaje) VALUES (4, 5, 4);
 
 COMMIT;
-
--- Limpieza: las columnas _temp ya no son necesarias porque este script
--- resolvio especialidad_id directamente. Puedes eliminarlas:
-ALTER TABLE catedratico DROP COLUMN especialidad_temp;
-ALTER TABLE plaza DROP COLUMN especialidad_temp;
-ALTER TABLE estudiante DROP COLUMN carrera_temp;
-ALTER TABLE estudiante DROP COLUMN es_repitencia_temp;
