@@ -1,7 +1,7 @@
 -- ============================================================
 -- PRACTICA 2 - Script de importacion de datos
 -- Generado automaticamente desde: Dataset_Practica2.xlsx
--- Fecha de generacion: 2026-08-28 20:04:51
+-- Fecha de generacion: 2026-08-29 09:39:38
 -- Ejecutar como Script (F5) sobre la conexion de Oracle correspondiente.
 -- Respeta el orden de dependencia de llaves foraneas.
 -- ============================================================
@@ -18,6 +18,7 @@ INSERT INTO departamento (id_departamento, nombre) VALUES (1, 'Guatemala');
 INSERT INTO departamento (id_departamento, nombre) VALUES (2, 'Sacatepéquez');
 INSERT INTO departamento (id_departamento, nombre) VALUES (3, 'Quetzaltenango');
 INSERT INTO departamento (id_departamento, nombre) VALUES (4, 'Escuintla');
+INSERT INTO departamento (id_departamento, nombre) VALUES (5, 'Calificacion');
 
 -- 3. estado_colocacion
 INSERT INTO estado_colocacion (id_estado, nombre) VALUES (1, 'Activa');
