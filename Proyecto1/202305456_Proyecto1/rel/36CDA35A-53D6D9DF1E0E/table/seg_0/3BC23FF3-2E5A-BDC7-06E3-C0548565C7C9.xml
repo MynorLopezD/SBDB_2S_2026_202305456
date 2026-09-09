@@ -1,0 +1,157 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3BC23FF3-2E5A-BDC7-06E3-C0548565C7C9" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="TIENDA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_TIENDA" id="161D3B7E-62CF-3EA6-DD1B-0DE30A74FA77">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>ID_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>21</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_TIENDA" id="76D44704-4E3A-7FEB-04B8-6C3768A61E2F">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>NOMBRE_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DIRECCION_TIENDA" id="DAFE6685-6388-896A-FE84-7631E6865B47">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>DIRECCION_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150 BYTE</dataTypeSize>
+<ownDataTypeParameters>150 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TELEFONO_TIENDA" id="C7CAD710-BB35-F365-1F34-581014AC6866">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>TELEFONO_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_MUNICIPIO" id="2D226E98-5D4C-4D14-C86C-84D89AFAD23E">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>ID_MUNICIPIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F22AE030-8BA4-2A6F-8333-1DB44F461D15" referredColumn="167A6C21-2CA7-D306-F67E-63E857725550"/>
+</associations>
+</Column>
+<Column name="ID_TIPO_TIENDA" id="34ED47F9-CB8C-4005-FCD0-39D64E68BA82">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIENDA</sourceObjSchema>
+<sourceObjName>ID_TIPO_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2BEDA122-EDBD-8863-BBD7-69E5FD1B1C70" referredColumn="0D11EC46-98B4-612B-EB51-2A337F186A15"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B66FFBAC-B731-1EB9-6548-D5861F38944C" name="PK_TIENDA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="161D3B7E-62CF-3EA6-DD1B-0DE30A74FA77"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="EA444300-8790-3855-781C-5749791EADBE" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_TIENDA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="161D3B7E-62CF-3EA6-DD1B-0DE30A74FA77"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CEA1718C-068E-F764-23A9-3A8CCFC45F1C" name="FK_TIENDA_MUNICIPIO">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D226E98-5D4C-4D14-C86C-84D89AFAD23E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="74EBE8C2-3C1C-9188-F71C-0C44AF0FB961" name="FK_TIENDA_TIPO_TIENDA">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="34ED47F9-CB8C-4005-FCD0-39D64E68BA82"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

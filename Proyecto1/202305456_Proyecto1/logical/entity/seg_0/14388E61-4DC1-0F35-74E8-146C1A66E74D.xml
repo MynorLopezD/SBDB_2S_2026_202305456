@@ -1,0 +1,117 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="14388E61-4DC1-0F35-74E8-146C1A66E74D" name="DETALLE VENTA">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>904CC858-E1A3-88E0-3B37-4A7ABEC25424</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID VENTA" id="1C4739C9-B24A-AD07-104E-60EEDEF8C44F">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>BED160E3-5D9D-42FE-2242-589A08D7CF7A</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<referedAttribute>63FB4492-5433-D5B9-C7E7-E6207B42923C</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID PRODUCTO" id="11BD84BB-5239-E1C2-05E2-9C9F2802285C">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>D740B075-660D-3452-C79A-96C292406703</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<referedAttribute>12ED63C2-B93D-C6F2-67AF-A32BF8D041BE</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CANTIDAD" id="DA858C15-6FA1-172C-F334-6D444324DE99">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>266AEC34-F7F7-F44B-ADDB-CA093CF0FBCA</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<constraintName>CK_DETVENTA_CANTIDAD</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="cantidad &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="cantidad &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PRECIO UNITARIO" id="E213E7E7-1FAB-BCF3-376C-24C42882CB32">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>6B278D3E-9EC8-3A38-F5EE-765783471F56</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<constraintName>CK_DETVENTA_PRECIO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="precio_unitario &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="precio_unitario &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SUBTOTAL" id="BF1E5AA6-3D22-06E5-9CBF-8A57288C2269">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>DF43941C-6F41-979B-8401-182C63397FE5</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="EB0F6D29-AF7B-4FEB-5B17-E43D01B513A2" name="PK DETALLE VENTA">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>014EF2BC-4C75-A215-8061-6C3E3382FA82</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>1C4739C9-B24A-AD07-104E-60EEDEF8C44F</attributeRef>
+<attributeRef>11BD84BB-5239-E1C2-05E2-9C9F2802285C</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

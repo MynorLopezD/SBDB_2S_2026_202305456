@@ -1,0 +1,105 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="3121FE95-B9CD-B57A-BAFC-36361C5C5E92" name="PRODUCTO">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>A8FB14A6-EECE-BB93-3D96-F0506D5D2D67</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID PRODUCTO" id="12ED63C2-B93D-C6F2-67AF-A32BF8D041BE">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>75869D7B-7D30-931A-FD14-D41597B0D210</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NOMBRE PRODUCTO" id="548E806E-A362-FE06-59B7-97CE19657089">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>AD5BB71A-8B90-4970-3D90-A41C21705A69</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="DESCRIPCION PRODUCTO" id="00E2CC15-D551-5A12-EE8E-40EEE4229208">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>7BB407EA-A208-A60D-F71A-DD8B9281863F</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>300 BYTE</dataTypeSize>
+<ownDataTypeParameters>300 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID CATEGORIA" id="2D1A478B-E29D-E72E-07F0-2428FE7A4BDF">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>FD5192D8-D78B-7AFA-BD25-9409569BB6BE</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<referedAttribute>E4B01025-2A41-650D-C7BB-61CDF0CEB76D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID MARCA" id="742270CE-B559-6127-DEDB-76267E2AAA17">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>92DEE358-245A-BC72-4AF5-C126401BEB79</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<referedAttribute>B4708136-D62E-355F-EB01-56E7E95B892F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="8908A7A0-C89F-D454-16E2-77EFEAC4E815" name="PK PRODUCTO">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>6994AF92-F986-C6AC-A79C-0972B00F16C8</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>12ED63C2-B93D-C6F2-67AF-A32BF8D041BE</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

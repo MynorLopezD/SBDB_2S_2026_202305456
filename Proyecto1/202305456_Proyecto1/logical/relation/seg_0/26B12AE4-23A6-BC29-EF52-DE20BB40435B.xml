@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_EMPLEADO_CARGO" directorySegmentName="seg_0" id="26B12AE4-23A6-BC29-EF52-DE20BB40435B">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>C4947B0C-27C4-8485-69DD-7F4AD0D2E8AB</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>00AABAA4-7F5D-0484-6161-A47F07A09FF8</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>B8BA9135-8B9A-2928-758F-5CD0178DBCC2</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>3BAB29B5-A9E5-6D9A-1454-B84E30C783A3</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="METODO_PAGO" directorySegmentName="seg_0" id="6DBC9F6D-3E3A-536A-6B86-7733A370302A">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<schemaObject>672BD682-69F9-68F7-562F-797117AC0937</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>FF87602A-EB78-5BE6-1D2B-C201CBEB4623</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ID_METODO_PAGO" id="13BD90F9-2CB5-8423-00E0-F92AF1F02FA0">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="NOMBRE_METODO_PAGO" id="868A29C3-A7DE-185D-5773-26268A85FA15">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_METODO_PAGO" id="08771ECB-D8D7-5E29-43D3-63C3B201437D">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<schemaObject>672BD682-69F9-68F7-562F-797117AC0937</schemaObject>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+</IndexProxy>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="UQ_METODO_PAGO_NOMBRE" id="96CBB779-2A1F-6D9B-00D1-8084FFBB5A86">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<schemaObject>672BD682-69F9-68F7-562F-797117AC0937</schemaObject>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_METODO_PAGO" id="30ECFF5C-484F-1EF1-43CC-0624723F4DC6">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+<existingIndex>08771ECB-D8D7-5E29-43D3-63C3B201437D</existingIndex>
+<indexSegment>50D9A110-2336-13F7-6C1B-539482817409</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="UQ_METODO_PAGO_NOMBRE" id="592FB5FC-B788-DE34-4230-E321458D2473">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+<existingIndex>96CBB779-2A1F-6D9B-00D1-8084FFBB5A86</existingIndex>
+<indexSegment>50D9A110-2336-13F7-6C1B-539482817409</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev20c>

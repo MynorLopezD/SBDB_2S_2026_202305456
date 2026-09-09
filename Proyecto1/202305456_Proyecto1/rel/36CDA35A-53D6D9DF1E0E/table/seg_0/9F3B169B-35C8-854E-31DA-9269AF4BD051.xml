@@ -1,0 +1,103 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9F3B169B-35C8-854E-31DA-9269AF4BD051" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="MARCA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>MARCA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_MARCA" id="EB8B5D3F-30A0-E31E-DF75-3D5BEBDC4AC1">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>MARCA</sourceObjSchema>
+<sourceObjName>ID_MARCA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>16</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_MARCA" id="AA0E6E1E-CDF2-EAA0-C48B-E6643CFF6AE8">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>MARCA</sourceObjSchema>
+<sourceObjName>NOMBRE_MARCA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="14217288-C39A-09B1-EF4B-CF3C68EBB3C6" name="PK_MARCA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_MARCA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EB8B5D3F-30A0-E31E-DF75-3D5BEBDC4AC1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B2A0C3DE-5C19-BD1D-F1DF-21398134516C" name="UQ_MARCA_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_MARCA_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AA0E6E1E-CDF2-EAA0-C48B-E6643CFF6AE8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="27CA77B0-AB47-F5B8-114C-06197CC985D2" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_MARCA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_MARCA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EB8B5D3F-30A0-E31E-DF75-3D5BEBDC4AC1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7E25A70D-1D67-B5BF-ED91-0BD7B6539A55" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_MARCA_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_MARCA_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AA0E6E1E-CDF2-EAA0-C48B-E6643CFF6AE8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

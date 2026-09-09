@@ -1,0 +1,103 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="DB8ECC3B-0C5A-D8C0-87D7-87F43D565817" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="CARGO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>CARGO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_CARGO" id="DB68229B-BE8E-48E2-4900-E4D5EC63ABFF">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CARGO</sourceObjSchema>
+<sourceObjName>ID_CARGO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>5</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_CARGO" id="AFEF8BE4-E458-A881-5649-270FFB7A5EA4">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CARGO</sourceObjSchema>
+<sourceObjName>NOMBRE_CARGO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="73E9D2E7-860E-D43B-06A1-EAA99FFCD89A" name="PK_CARGO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_CARGO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DB68229B-BE8E-48E2-4900-E4D5EC63ABFF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="55CF63BB-0485-10E1-261F-707D349174EB" name="UQ_CARGO_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_CARGO_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AFEF8BE4-E458-A881-5649-270FFB7A5EA4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A21C0833-7D45-1B0C-6E52-80DCA58DC271" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_CARGO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_CARGO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:46 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DB68229B-BE8E-48E2-4900-E4D5EC63ABFF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9D023F09-A5F1-269C-06FD-A2050AC31A2D" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_CARGO_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_CARGO_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:46 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AFEF8BE4-E458-A881-5649-270FFB7A5EA4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

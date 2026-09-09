@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_VENTA_EMPLEADO" directorySegmentName="seg_0" id="3FB8C726-7918-970E-8895-B5F4B19E1F68">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>5EE288C5-2D98-3D9B-C272-5E0050DE6B4E</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>4652DCA1-3E50-5295-255B-E590DC492FA6</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>3BAB29B5-A9E5-6D9A-1454-B84E30C783A3</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>2C51FB6B-B2B7-C969-39B4-F312FE6C484C</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

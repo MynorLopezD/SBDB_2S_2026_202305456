@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_PAGO_METODO" directorySegmentName="seg_0" id="0738B6A9-3391-36EF-124B-0247109F3700">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>2E7B06D2-6600-D899-3E47-E5EFAF6755D5</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>2B3778BA-FCCC-0F8F-9C96-40C1F0C6988A</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>3808D89A-0589-A195-4815-104B84B3C819</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>70E7FB84-236F-BC49-56F5-690779851AC6</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4DF2A9A1-AA96-8A14-400F-E2A1CBCA9B2E" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="DEPARTAMENTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>DEPARTAMENTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_DEPARTAMENTO" id="9BB6E87B-BCEC-D874-950E-B794398EB339">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DEPARTAMENTO</sourceObjSchema>
+<sourceObjName>ID_DEPARTAMENTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>33</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_DEPARTAMENTO" id="B9C836EB-064D-FE91-FCA3-F74C757435CA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DEPARTAMENTO</sourceObjSchema>
+<sourceObjName>NOMBRE_DEPARTAMENTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_PAIS" id="7E70FB16-2054-C92D-5AE7-ADD471A4D9BD">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DEPARTAMENTO</sourceObjSchema>
+<sourceObjName>ID_PAIS</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="579AAD54-14E3-4F67-484B-AE1206A59441" referredColumn="7C5BBDA7-A94F-5749-182B-E42F76FB38DF"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="686F84C4-0F02-B76D-ABFF-56ECB005E631" name="PK_DEPARTAMENTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_DEPARTAMENTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9BB6E87B-BCEC-D874-950E-B794398EB339"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D44999E1-3262-23EE-1F86-53784D2AF7DF" name="UQ_DEPARTAMENTO_NOMBRE_PAIS">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_DEPARTAMENTO_NOMBRE_PAIS</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9C836EB-064D-FE91-FCA3-F74C757435CA"/>
+<colUsage columnID="7E70FB16-2054-C92D-5AE7-ADD471A4D9BD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AC0962D8-7E99-B622-5F14-15A1EDE02717" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_DEPARTAMENTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_DEPARTAMENTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9BB6E87B-BCEC-D874-950E-B794398EB339"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C943858E-36A8-E7B7-21C6-7718F052FCF0" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_DEPARTAMENTO_NOMBRE_PAIS">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_DEPARTAMENTO_NOMBRE_PAIS</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9C836EB-064D-FE91-FCA3-F74C757435CA"/>
+<colUsage columnID="7E70FB16-2054-C92D-5AE7-ADD471A4D9BD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B41B8DEE-85E9-784F-F3B3-80269CC066F8" name="FK_DEPARTAMENTO_PAIS">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7E70FB16-2054-C92D-5AE7-ADD471A4D9BD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

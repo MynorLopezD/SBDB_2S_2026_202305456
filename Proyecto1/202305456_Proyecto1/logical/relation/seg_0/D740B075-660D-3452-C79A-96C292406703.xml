@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_DETVENTA_PRODUCTO" directorySegmentName="seg_0" id="D740B075-660D-3452-C79A-96C292406703">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>442DD4C9-B032-C5C2-C012-4A11C19E6BAF</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>8908A7A0-C89F-D454-16E2-77EFEAC4E815</sourcePk>
+<identifying>true</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>3121FE95-B9CD-B57A-BAFC-36361C5C5E92</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>14388E61-4DC1-0F35-74E8-146C1A66E74D</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

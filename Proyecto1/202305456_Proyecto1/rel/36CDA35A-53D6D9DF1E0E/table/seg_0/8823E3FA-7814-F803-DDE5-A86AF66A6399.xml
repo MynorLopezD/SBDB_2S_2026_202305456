@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="8823E3FA-7814-F803-DDE5-A86AF66A6399" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="MUNICIPIO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>MUNICIPIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_MUNICIPIO" id="167A6C21-2CA7-D306-F67E-63E857725550">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>MUNICIPIO</sourceObjSchema>
+<sourceObjName>ID_MUNICIPIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>81</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_MUNICIPIO" id="9BD1E99D-C770-2245-27EA-075B43FD185E">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>MUNICIPIO</sourceObjSchema>
+<sourceObjName>NOMBRE_MUNICIPIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>60 BYTE</dataTypeSize>
+<ownDataTypeParameters>60 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_DEPARTAMENTO" id="63F55913-3CA1-9B67-3A00-5914100B8FB3">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>MUNICIPIO</sourceObjSchema>
+<sourceObjName>ID_DEPARTAMENTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FCFBF575-688B-995D-9979-B3496BAC2D06" referredColumn="9BB6E87B-BCEC-D874-950E-B794398EB339"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2D9A684D-31A0-5278-97D3-4D30BF35103F" name="PK_MUNICIPIO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_MUNICIPIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="167A6C21-2CA7-D306-F67E-63E857725550"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9B567D51-B3D9-9F40-94F6-6C2513DD0DF4" name="UQ_MUNICIPIO_NOMBRE_DEPTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_MUNICIPIO_NOMBRE_DEPTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9BD1E99D-C770-2245-27EA-075B43FD185E"/>
+<colUsage columnID="63F55913-3CA1-9B67-3A00-5914100B8FB3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8A38AC5C-8041-689F-34FA-41427B6E5C6E" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_MUNICIPIO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_MUNICIPIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="167A6C21-2CA7-D306-F67E-63E857725550"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1CF145E1-0220-213D-FFB5-FF2F07598D4F" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_MUNICIPIO_NOMBRE_DEPTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_MUNICIPIO_NOMBRE_DEPTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9BD1E99D-C770-2245-27EA-075B43FD185E"/>
+<colUsage columnID="63F55913-3CA1-9B67-3A00-5914100B8FB3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="15F18B51-40D8-1C12-75C3-ABDCEE83E3BA" name="FK_MUNICIPIO_DEPARTAMENTO">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="63F55913-3CA1-9B67-3A00-5914100B8FB3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

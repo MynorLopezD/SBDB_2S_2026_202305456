@@ -1,0 +1,109 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B818267F-D135-B91D-2DAE-5B073B62540B" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="ESTADO_VENTA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>ESTADO_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_ESTADO_VENTA" id="DF34CA5C-25F7-F00E-A8B7-F116EA96A7E0">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTADO_VENTA</sourceObjSchema>
+<sourceObjName>ID_ESTADO_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>4</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_ESTADO_VENTA" id="F22AA9B5-ACEC-C6BC-4B12-FE0E0AB74DB5">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTADO_VENTA</sourceObjSchema>
+<sourceObjName>NOMBRE_ESTADO_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<constraintName>CK_ESTADO_VENTA_VALORES</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;ANULADA&apos;" description=""/>
+<valueDef value="&apos;PAGADA&apos;" description=""/>
+<valueDef value="&apos;REGISTRADA&apos;" description=""/>
+</listOfValues>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="49ACE5F8-A1C5-4D14-276B-271FB35F844E" name="PK_ESTADO_VENTA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_ESTADO_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DF34CA5C-25F7-F00E-A8B7-F116EA96A7E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FABE97C5-A79A-B6DD-285C-9384F7C5347F" name="UQ_ESTADO_VENTA_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_ESTADO_VENTA_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F22AA9B5-ACEC-C6BC-4B12-FE0E0AB74DB5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C7FF6F5A-A9CD-62D9-54C9-D079AA0246DD" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_ESTADO_VENTA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_ESTADO_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DF34CA5C-25F7-F00E-A8B7-F116EA96A7E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="62D2AE5D-3E5B-1793-C3B0-82C9C14FD8EE" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_ESTADO_VENTA_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_ESTADO_VENTA_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F22AA9B5-ACEC-C6BC-4B12-FE0E0AB74DB5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,103 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="51712430-5929-03B8-2161-8F4003AE4741" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="TIPO_IDENTIFICACION">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>TIPO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_TIPO_IDENTIFICACION" id="17FF9FC9-DB7D-4A92-7631-3FF3C6B4AD17">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIPO_IDENTIFICACION</sourceObjSchema>
+<sourceObjName>ID_TIPO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>4</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE_TIPO_IDENTIFICACION" id="D2F371AE-7A95-8693-64BA-7F1AC00CE989">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>TIPO_IDENTIFICACION</sourceObjSchema>
+<sourceObjName>NOMBRE_TIPO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="469F603E-D971-DB49-C4B7-A3541707B5B1" name="PK_TIPO_IDENTIFICACION">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_TIPO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="17FF9FC9-DB7D-4A92-7631-3FF3C6B4AD17"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="358D4FCC-122D-7277-6D8C-CD248E61016B" name="UQ_TIPO_IDENTIFICACION_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_TIPO_IDENTIFICACION_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D2F371AE-7A95-8693-64BA-7F1AC00CE989"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="79ECE1FF-F718-9655-90A0-34B80208CBD3" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_TIPO_IDENTIFICACION">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_TIPO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="17FF9FC9-DB7D-4A92-7631-3FF3C6B4AD17"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3390E3A0-E47D-4861-AC7D-8FC876EA13E2" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_TIPO_IDENTIFICACION_NOMBRE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_TIPO_IDENTIFICACION_NOMBRE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D2F371AE-7A95-8693-64BA-7F1AC00CE989"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

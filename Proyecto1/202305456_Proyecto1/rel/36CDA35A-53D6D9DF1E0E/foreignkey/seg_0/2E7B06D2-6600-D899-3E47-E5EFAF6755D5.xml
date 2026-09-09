@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="2E7B06D2-6600-D899-3E47-E5EFAF6755D5" containerWithKeyObject="381BE36D-1B36-CF46-BAF4-7043E6384EF4" localFKIndex="227017F7-152F-FAE2-DB9C-5F9BB60F6BC3" name="FK_PAGO_METODO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>FK_PAGO_METODO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<referredTableLongName>ESTRELLA.METODO_PAGO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>6DBC9F6D-3E3A-536A-6B86-7733A370302A</referredTableID>
+<keyObject>30ECFF5C-484F-1EF1-43CC-0624723F4DC6</keyObject>
+<referredKeyID>30ECFF5C-484F-1EF1-43CC-0624723F4DC6</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_METODO_PAGO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

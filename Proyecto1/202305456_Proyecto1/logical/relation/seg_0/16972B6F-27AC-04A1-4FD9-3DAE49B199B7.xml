@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_VENTA_ESTADO" directorySegmentName="seg_0" id="16972B6F-27AC-04A1-4FD9-3DAE49B199B7">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>5BEF93CD-99C7-EB8F-D1FF-4137630AB889</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>4671B70E-BAE2-E2F4-4964-AC9F63080131</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>14C165EB-FD26-49A9-1DA8-E1D480165A99</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>2C51FB6B-B2B7-C969-39B4-F312FE6C484C</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

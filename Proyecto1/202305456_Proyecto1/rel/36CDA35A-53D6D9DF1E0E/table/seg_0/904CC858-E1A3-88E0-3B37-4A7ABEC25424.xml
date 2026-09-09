@@ -1,0 +1,161 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="904CC858-E1A3-88E0-3B37-4A7ABEC25424" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="DETALLE_VENTA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>DETALLE_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_VENTA" id="77CABF42-8D0B-B45E-0D4C-2654A49707C7">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DETALLE_VENTA</sourceObjSchema>
+<sourceObjName>ID_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="56CEC336-5C2E-129D-B85E-EDE3C5197A65" referredColumn="2E989FE4-8ADA-CEE2-ABBC-A2121BE56FB2"/>
+</associations>
+</Column>
+<Column name="ID_PRODUCTO" id="D2BE631A-5343-23EA-925D-E70ADF4A7520">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DETALLE_VENTA</sourceObjSchema>
+<sourceObjName>ID_PRODUCTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="442DD4C9-B032-C5C2-C012-4A11C19E6BAF" referredColumn="75869D7B-7D30-931A-FD14-D41597B0D210"/>
+</associations>
+</Column>
+<Column name="CANTIDAD" id="266AEC34-F7F7-F44B-ADDB-CA093CF0FBCA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DETALLE_VENTA</sourceObjSchema>
+<sourceObjName>CANTIDAD</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<constraintName>CK_DETVENTA_CANTIDAD</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="cantidad &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="cantidad &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRECIO_UNITARIO" id="6B278D3E-9EC8-3A38-F5EE-765783471F56">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DETALLE_VENTA</sourceObjSchema>
+<sourceObjName>PRECIO_UNITARIO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<constraintName>CK_DETVENTA_PRECIO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="precio_unitario &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="precio_unitario &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SUBTOTAL" id="DF43941C-6F41-979B-8401-182C63397FE5">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>DETALLE_VENTA</sourceObjSchema>
+<sourceObjName>SUBTOTAL</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="014EF2BC-4C75-A215-8061-6C3E3382FA82" name="PK_DETALLE_VENTA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_DETALLE_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77CABF42-8D0B-B45E-0D4C-2654A49707C7"/>
+<colUsage columnID="D2BE631A-5343-23EA-925D-E70ADF4A7520"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="89BAF9F4-6EB3-9A08-40E2-97CBA2E7E505" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_DETALLE_VENTA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_DETALLE_VENTA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77CABF42-8D0B-B45E-0D4C-2654A49707C7"/>
+<colUsage columnID="D2BE631A-5343-23EA-925D-E70ADF4A7520"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D5B4020A-5FBF-55C6-DE03-23F65CF63459" name="FK_DETVENTA_PRODUCTO">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D2BE631A-5343-23EA-925D-E70ADF4A7520"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="12167416-1651-C230-7BB8-10A2ADAFCD52" name="FK_DETVENTA_VENTA">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77CABF42-8D0B-B45E-0D4C-2654A49707C7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+<tableCheckConstraints itemClass="oracle.dbtools.crest.model.design.constraint.TableLevelConstraint">
+<tableCheckConstraint name="CK_DETVENTA_SUBTOTAL" directorySegmentName="seg_0" id="42448A3C-04E2-1174-FCB9-15EF98494694">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>CK_DETVENTA_SUBTOTAL</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<rule><![CDATA[subtotal = cantidad * precio_unitario]]></rule>
+</tableCheckConstraint>
+</tableCheckConstraints>
+</Table>

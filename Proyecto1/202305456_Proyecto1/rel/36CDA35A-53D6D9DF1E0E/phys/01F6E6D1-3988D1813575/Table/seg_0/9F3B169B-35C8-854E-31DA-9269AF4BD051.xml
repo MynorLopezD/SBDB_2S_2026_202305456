@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="MARCA" directorySegmentName="seg_0" id="9F3B169B-35C8-854E-31DA-9269AF4BD051">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<schemaObject>672BD682-69F9-68F7-562F-797117AC0937</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>FF87602A-EB78-5BE6-1D2B-C201CBEB4623</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NOMBRE_MARCA" id="AA0E6E1E-CDF2-EAA0-C48B-E6643CFF6AE8">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_MARCA" id="EB8B5D3F-30A0-E31E-DF75-3D5BEBDC4AC1">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_MARCA" id="27CA77B0-AB47-F5B8-114C-06197CC985D2">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<schemaObject>672BD682-69F9-68F7-562F-797117AC0937</schemaObject>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+</IndexProxy>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="UQ_MARCA_NOMBRE" id="7E25A70D-1D67-B5BF-ED91-0BD7B6539A55">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<schemaObject>672BD682-69F9-68F7-562F-797117AC0937</schemaObject>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_MARCA" id="14217288-C39A-09B1-EF4B-CF3C68EBB3C6">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+<existingIndex>27CA77B0-AB47-F5B8-114C-06197CC985D2</existingIndex>
+<indexSegment>50D9A110-2336-13F7-6C1B-539482817409</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="UQ_MARCA_NOMBRE" id="B2A0C3DE-5C19-BD1D-F1DF-21398134516C">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<segment>50D9A110-2336-13F7-6C1B-539482817409</segment>
+<tableSpace>ED722A4A-A0F2-C3EC-7ECC-3EEB1AC938CB</tableSpace>
+<existingIndex>7E25A70D-1D67-B5BF-ED91-0BD7B6539A55</existingIndex>
+<indexSegment>50D9A110-2336-13F7-6C1B-539482817409</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev20c>

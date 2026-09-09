@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_DEPARTAMENTO_PAIS" directorySegmentName="seg_0" id="52D85C7E-A876-2BF3-5011-BBAA97572DED">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>579AAD54-14E3-4F67-484B-AE1206A59441</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>019F39F4-9120-447E-4653-1E7069572154</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>5901583C-9D25-156F-8737-95705E3259F9</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>76A109E3-144B-77E5-CC53-B7833AE4A53E</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

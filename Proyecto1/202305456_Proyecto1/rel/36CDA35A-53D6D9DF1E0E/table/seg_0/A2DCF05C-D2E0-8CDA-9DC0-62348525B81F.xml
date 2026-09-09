@@ -1,0 +1,135 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A2DCF05C-D2E0-8CDA-9DC0-62348525B81F" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="CATALOGO_TIENDA_PRODUCTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>CATALOGO_TIENDA_PRODUCTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_TIENDA" id="45B30D77-C563-98E7-22EC-FC5A88732EF9">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CATALOGO_TIENDA_PRODUCTO</sourceObjSchema>
+<sourceObjName>ID_TIENDA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="72E0705D-BECD-2F50-CE88-4A5AC79BB5E6" referredColumn="161D3B7E-62CF-3EA6-DD1B-0DE30A74FA77"/>
+</associations>
+</Column>
+<Column name="ID_PRODUCTO" id="88B92399-8D7B-701D-39D9-4438658D3270">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CATALOGO_TIENDA_PRODUCTO</sourceObjSchema>
+<sourceObjName>ID_PRODUCTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="52A6EAE3-AA7E-9333-28E5-2F08DAD4E46B" referredColumn="75869D7B-7D30-931A-FD14-D41597B0D210"/>
+</associations>
+</Column>
+<Column name="PRECIO_VIGENTE" id="F5D7EB79-4015-DB90-0332-3D4631C2581C">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CATALOGO_TIENDA_PRODUCTO</sourceObjSchema>
+<sourceObjName>PRECIO_VIGENTE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<constraintName>CK_CATPROD_PRECIO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="precio_vigente &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="precio_vigente &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EXISTENCIA_ACTUAL" id="7FC668A0-042D-DC04-66C5-FD4EE0564006">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CATALOGO_TIENDA_PRODUCTO</sourceObjSchema>
+<sourceObjName>EXISTENCIA_ACTUAL</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<constraintName>CK_CATPROD_EXISTENCIA</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="existencia_actual &gt;= 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="existencia_actual &gt;= 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="61AD6FA1-A262-61CE-F7D1-87DCC3F2BDDD" name="PK_CATALOGO_TIENDA_PRODUCTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_CATALOGO_TIENDA_PRODUCTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="45B30D77-C563-98E7-22EC-FC5A88732EF9"/>
+<colUsage columnID="88B92399-8D7B-701D-39D9-4438658D3270"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5B820E43-70F9-F3FF-AD51-F7B1CCD73D19" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_CATALOGO_TIENDA_PRODUCTO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_CATALOGO_TIENDA_PRODUCTO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="45B30D77-C563-98E7-22EC-FC5A88732EF9"/>
+<colUsage columnID="88B92399-8D7B-701D-39D9-4438658D3270"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="38E5B3DF-7C27-FC07-EA08-DE1725BDA87D" name="FK_CATPROD_PRODUCTO">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="88B92399-8D7B-701D-39D9-4438658D3270"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="10F089A1-27BF-7AC9-AC88-8B7C05D23708" name="FK_CATPROD_TIENDA">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="45B30D77-C563-98E7-22EC-FC5A88732EF9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

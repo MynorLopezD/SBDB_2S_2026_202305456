@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="579AAD54-14E3-4F67-484B-AE1206A59441" containerWithKeyObject="4DF2A9A1-AA96-8A14-400F-E2A1CBCA9B2E" localFKIndex="B41B8DEE-85E9-784F-F3B3-80269CC066F8" name="FK_DEPARTAMENTO_PAIS">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>FK_DEPARTAMENTO_PAIS</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<referredTableLongName>ESTRELLA.PAIS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>DD4FC0CD-4538-FB85-4551-B4736FFB7871</referredTableID>
+<keyObject>E8DF4519-32EE-607A-4CDB-B5EB50A5F1DE</keyObject>
+<referredKeyID>E8DF4519-32EE-607A-4CDB-B5EB50A5F1DE</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_PAIS</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

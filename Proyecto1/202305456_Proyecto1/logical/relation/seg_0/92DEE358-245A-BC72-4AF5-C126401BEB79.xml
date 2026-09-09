@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_PRODUCTO_MARCA" directorySegmentName="seg_0" id="92DEE358-245A-BC72-4AF5-C126401BEB79">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 04:00:58 UTC</createdTime>
+<generatorID>BA7D44A0-0693-C2F5-D4C1-DD87E20A11B1</generatorID>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<engineerTo>
+<item key="36CDA35A-09D9-7768-0D56-53D6D9DF1E0E" value="true"/>
+</engineerTo>
+<sourcePk>A3EB02FB-35A4-C534-26A9-AC80DDE9AF6B</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>0F1CED3F-E95F-F34C-83E3-CF176729027A</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>3121FE95-B9CD-B57A-BAFC-36361C5C5E92</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

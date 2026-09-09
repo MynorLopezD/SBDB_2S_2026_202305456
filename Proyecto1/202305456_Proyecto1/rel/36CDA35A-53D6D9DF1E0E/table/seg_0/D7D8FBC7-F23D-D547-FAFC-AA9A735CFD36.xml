@@ -1,0 +1,183 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D7D8FBC7-F23D-D547-FAFC-AA9A735CFD36" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="CLIENTE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>CLIENTE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_CLIENTE" id="64AE8802-2DDF-64BA-8ABB-C64156359BCD">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CLIENTE</sourceObjSchema>
+<sourceObjName>ID_CLIENTE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementStartWith>301</autoIncrementStartWith>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="ID_PERSONA" id="E4F13642-9F92-C00B-0B12-2796C2041E7C">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CLIENTE</sourceObjSchema>
+<sourceObjName>ID_PERSONA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A695EB83-8189-2D1D-16E7-D13A41C7C777" referredColumn="E5BB6319-BE6F-4D32-8EAF-9BBEABA5144B"/>
+</associations>
+</Column>
+<Column name="ID_TIPO_IDENTIFICACION" id="D4751889-0432-260D-F861-1920DBB101C9">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CLIENTE</sourceObjSchema>
+<sourceObjName>ID_TIPO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="08FB5DC8-0357-0785-9527-660E49E89024" referredColumn="17FF9FC9-DB7D-4A92-7631-3FF3C6B4AD17"/>
+</associations>
+</Column>
+<Column name="NUMERO_IDENTIFICACION" id="CB2B0B30-4C7C-37E6-AE50-72FDB89038B2">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>CLIENTE</sourceObjSchema>
+<sourceObjName>NUMERO_IDENTIFICACION</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:42 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="379ED174-D5DF-F30F-0C90-43C5C6E78E1C" name="PK_CLIENTE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_CLIENTE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="64AE8802-2DDF-64BA-8ABB-C64156359BCD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A189EE90-E5CD-E338-555F-E2A03CA6CA2E" name="UQ_CLIENTE_PERSONA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_CLIENTE_PERSONA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E4F13642-9F92-C00B-0B12-2796C2041E7C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F5C9A375-F07D-A868-9CC4-33802830AEF5" name="UQ_CLIENTE_TIPO_NUMERO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_CLIENTE_TIPO_NUMERO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:50 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D4751889-0432-260D-F861-1920DBB101C9"/>
+<colUsage columnID="CB2B0B30-4C7C-37E6-AE50-72FDB89038B2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A6CD43F9-252D-6947-CC78-96A2DBF6153C" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="PK_CLIENTE">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>PK_CLIENTE</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="64AE8802-2DDF-64BA-8ABB-C64156359BCD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D4DE33B0-6D7A-3E34-2F7F-4D6328C53B88" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_CLIENTE_PERSONA">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_CLIENTE_PERSONA</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E4F13642-9F92-C00B-0B12-2796C2041E7C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="82A7FB4F-3C78-DBEF-CCEB-4C07791C7D06" schemaObject="672BD682-69F9-68F7-562F-797117AC0937" name="UQ_CLIENTE_TIPO_NUMERO">
+<sourceConnName>202305456_proyecto1</sourceConnName>
+<sourceObjSchema>ESTRELLA</sourceObjSchema>
+<sourceObjName>UQ_CLIENTE_TIPO_NUMERO</sourceObjName>
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:49 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D4751889-0432-260D-F861-1920DBB101C9"/>
+<colUsage columnID="CB2B0B30-4C7C-37E6-AE50-72FDB89038B2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5779F27A-3FF0-8FF0-0771-4EE6CB783EBE" name="FK_CLIENTE_PERSONA">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E4F13642-9F92-C00B-0B12-2796C2041E7C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="25C42EB6-CF70-C91C-A5A4-66A901D54120" name="FK_CLIENTE_TIPO_IDENT">
+<createdBy>mynor</createdBy>
+<createdTime>2026-09-09 03:58:51 UTC</createdTime>
+<ownerDesignName>202305456_Proyecto1</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D4751889-0432-260D-F861-1920DBB101C9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
