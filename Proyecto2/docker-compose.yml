@@ -1,0 +1,86 @@
+# Comercial La Estrella - Fase 2
+# SQL Server 2022 en Docker + servicio de inicializacion que ejecuta init.sql.
+#
+#   docker compose up -d        -> levanta la base y la inicializa
+#   docker compose logs db-init -> muestra el resultado de init.sql
+#   docker compose down -v      -> apaga y BORRA los datos (reinicio desde cero)
+#
+# SQL Server no ejecuta scripts de inicio por si solo (a diferencia de Postgres
+# o MySQL), por eso existe el servicio "db-init": espera a que la base este
+# lista y corre init.sql con sqlcmd. Si la base ya esta inicializada lo omite,
+# asi que reiniciar los contenedores NO borra los datos creados desde la API.
+# Los "$$" son necesarios: Compose usa "$" para sus propias variables.
+
+name: comercial-la-estrella
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: estrella-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Estrella2026!}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - |
+          if [ -x /opt/mssql-tools18/bin/sqlcmd ]; then
+            /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" -b > /dev/null
+          else
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" -b > /dev/null
+          fi
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: estrella-db-init
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Estrella2026!}
+    volumes:
+      - ./init.sql:/init/init.sql:ro
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -e
+        if [ -x /opt/mssql-tools18/bin/sqlcmd ]; then
+          SQLCMD="/opt/mssql-tools18/bin/sqlcmd -C"
+        elif [ -x /opt/mssql-tools/bin/sqlcmd ]; then
+          SQLCMD="/opt/mssql-tools/bin/sqlcmd"
+        else
+          echo "ERROR: no se encontro sqlcmd dentro de la imagen de SQL Server."
+          exit 1
+        fi
+
+        echo "Esperando a SQL Server..."
+        until $$SQLCMD -S db -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" > /dev/null 2>&1; do
+          sleep 3
+        done
+
+        # 1 = la base y sus triggers ya existen (inicializacion completa)
+        INICIALIZADA=$$($$SQLCMD -S db -U sa -P "$$MSSQL_SA_PASSWORD" -h -1 -W -Q "SET NOCOUNT ON; IF DB_ID('ComercialLaEstrella') IS NULL SELECT 0 ELSE EXEC('SELECT COUNT(*) FROM ComercialLaEstrella.sys.triggers WHERE name = ''Insert_Pago''')" | tr -d '[:space:]')
+
+        if [ "$$INICIALIZADA" = "1" ]; then
+          echo "La base ComercialLaEstrella ya esta inicializada: se omite init.sql."
+          echo "(Para reiniciar desde cero: docker compose down -v)"
+          exit 0
+        fi
+
+        echo "Ejecutando init.sql (tablas, datos, vistas y triggers)..."
+        $$SQLCMD -S db -U sa -P "$$MSSQL_SA_PASSWORD" -b -I -x -i /init/init.sql
+        echo "init.sql completado correctamente."
+
+volumes:
+  sqlserver_data:
