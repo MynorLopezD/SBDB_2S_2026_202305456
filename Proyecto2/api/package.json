@@ -1,0 +1,19 @@
+{
+  "name": "comercial-la-estrella-api",
+  "version": "1.0.0",
+  "description": "API REST (Node.js + Express) de Comercial La Estrella sobre SQL Server 2022",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=18.19.0"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^18.0.6",
+    "express": "^4.22.3",
+    "mssql": "^12.7.4"
+  }
+}
