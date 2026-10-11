@@ -1,0 +1,2758 @@
+{
+  "info": {
+    "name": "Comercial La Estrella - Fase 2",
+    "description": "API REST (Node.js + Express) sobre SQL Server 2022.\n\nEjecutar con el Collection Runner en este orden: 1 (escenarios de triggers), 2 (CRUD), 3 (catalogos), 4 (reportes). La API debe estar corriendo en http://localhost:3000.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "0. Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Escenarios de validacion (triggers)",
+      "item": [
+        {
+          "name": "Preparacion",
+          "item": [
+            {
+              "name": "Crear venta de prueba",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Crea la venta sobre la que se ejecutan los tres escenarios. Se guarda su id en la variable venta_id."
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "const v = pm.response.json();",
+                      "pm.test(\"La venta nace REGISTRADA\", function () { pm.expect(v.estado).to.eql(\"REGISTRADA\"); });",
+                      "pm.collectionVariables.set(\"venta_id\", v.id_venta);"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Escenario 1 - Inventario (fallo)",
+          "item": [
+            {
+              "name": "1.1 GET existencia ANTES",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{producto_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tienda",
+                      "value": "{{tienda_id}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "const e = pm.response.json().existencia_actual;",
+                      "pm.test(\"El producto tiene existencia en la tienda\", function () { pm.expect(e).to.be.a(\"number\"); });",
+                      "pm.collectionVariables.set(\"stock_antes\", e);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "1.2 POST detalle con cantidad MAYOR a la existencia",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 999999,\n  \"precio_unitario\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "El trigger Insert_Detalle aborta la transaccion; la API traduce el error a HTTP 400 'Stock insuficiente'."
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"HTTP 400 Bad Request\", function () { pm.response.to.have.status(400); });",
+                      "pm.test(\"Mensaje: Stock insuficiente\", function () { pm.expect(pm.response.json().error).to.eql(\"Stock insuficiente\"); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "1.3 GET existencia (no debe cambiar)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{producto_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tienda",
+                      "value": "{{tienda_id}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"La existencia sigue igual (la transaccion se revirtio)\", function () { pm.expect(pm.response.json().existencia_actual).to.eql(parseInt(pm.collectionVariables.get(\"stock_antes\"), 10)); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "Pide mas unidades de las que hay: la base debe rechazar la operacion."
+        },
+        {
+          "name": "Escenario 2 - Inventario (exito)",
+          "item": [
+            {
+              "name": "2.1 POST detalle con cantidad valida (3 unidades)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 3,\n  \"precio_unitario\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"HTTP 201 Created\", function () { pm.response.to.have.status(201); });",
+                      "pm.test(\"Subtotal = 3 x 100\", function () { pm.expect(pm.response.json().subtotal).to.eql(300); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "2.2 GET existencia DESPUES (debe bajar 3)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{producto_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tienda",
+                      "value": "{{tienda_id}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"La existencia se redujo en 3 automaticamente\", function () { pm.expect(pm.response.json().existencia_actual).to.eql(parseInt(pm.collectionVariables.get(\"stock_antes\"), 10) - 3); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "Con una cantidad valida el trigger descuenta el inventario."
+        },
+        {
+          "name": "Escenario 3 - Estado de venta",
+          "item": [
+            {
+              "name": "3.1 POST abono parcial #1 (100 de 300)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.test(\"El API solo confirma el pago\", function () { pm.expect(pm.response.json().id_pago).to.be.a(\"number\"); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "3.2 GET venta (sigue REGISTRADA)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{venta_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Estado REGISTRADA con 100 pagados\", function () { const v = pm.response.json(); pm.expect(v.estado).to.eql(\"REGISTRADA\"); pm.expect(v.total_pagado).to.eql(100); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "3.3 POST abono parcial #2 (200 de 300)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "3.4 GET venta (sigue REGISTRADA)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{venta_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Estado REGISTRADA con 200 pagados\", function () { const v = pm.response.json(); pm.expect(v.estado).to.eql(\"REGISTRADA\"); pm.expect(v.total_pagado).to.eql(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "3.5 POST pago que cubre el total (300 de 300)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "3.6 GET venta (debe estar PAGADA)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{venta_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"El motor cambio el estado a PAGADA\", function () { const v = pm.response.json(); pm.expect(v.estado).to.eql(\"PAGADA\"); pm.expect(v.total_pagado).to.eql(v.total_venta); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "3.7 GET saldos pendientes (la venta ya no aparece)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/reportes/saldos-pendientes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reportes",
+                    "saldos-pendientes"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"La venta pagada salio de Vista_Saldos_Pendientes\", function () { const id = parseInt(pm.collectionVariables.get(\"venta_id\"), 10); pm.expect(pm.response.json().some(function (f) { return f.numero_venta === id; })).to.eql(false); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "Abonos parciales: la venta cambia a PAGADA solo cuando la suma de pagos cubre el total."
+        }
+      ],
+      "description": "Ejecutar esta carpeta completa y EN ORDEN (Collection Runner). Cada corrida crea una venta nueva y consume 3 unidades de stock."
+    },
+    {
+      "name": "2. CRUD de las entidades principales",
+      "item": [
+        {
+          "name": "Clientes",
+          "item": [
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/clientes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clientes"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombres\": \"Prueba\",\n  \"apellidos\": \"Postman\",\n  \"telefono\": \"55501234\",\n  \"correo\": \"prueba.postman.{{$timestamp}}@correo.com\",\n  \"direccion\": \"Zona 1, Ciudad\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"id_tipo_identificacion\": \"{{tipo_identificacion_id}}\",\n  \"numero_identificacion\": \"{{$timestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "const r = pm.response.json();",
+                      "pm.collectionVariables.set(\"nuevo_cliente_id\", r.id_cliente);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/clientes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clientes"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/clientes/{{nuevo_cliente_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clientes",
+                    "{{nuevo_cliente_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/clientes/{{nuevo_cliente_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clientes",
+                    "{{nuevo_cliente_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telefono\": \"55509999\",\n  \"direccion\": \"Zona 10, Ciudad\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/clientes/{{nuevo_cliente_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clientes",
+                    "{{nuevo_cliente_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Empleados",
+          "item": [
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/empleados",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "empleados"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombres\": \"Prueba\",\n  \"apellidos\": \"Postman\",\n  \"telefono\": \"55501234\",\n  \"correo\": \"empleado.postman.{{$timestamp}}@correo.com\",\n  \"direccion\": \"Zona 1, Ciudad\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"fecha_contratacion\": \"2024-01-15\",\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_cargo\": \"{{cargo_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "const r = pm.response.json();",
+                      "pm.collectionVariables.set(\"nuevo_empleado_id\", r.id_empleado);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/empleados",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "empleados"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/empleados/{{nuevo_empleado_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "empleados",
+                    "{{nuevo_empleado_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/empleados/{{nuevo_empleado_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "empleados",
+                    "{{nuevo_empleado_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telefono\": \"55508888\",\n  \"id_cargo\": \"{{cargo_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/empleados/{{nuevo_empleado_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "empleados",
+                    "{{nuevo_empleado_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tiendas",
+          "item": [
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tiendas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tiendas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_tienda\": \"Tienda de prueba Postman\",\n  \"direccion_tienda\": \"Avenida Central 1-23\",\n  \"telefono_tienda\": \"22223333\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"id_tipo_tienda\": \"{{tipo_tienda_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "const r = pm.response.json();",
+                      "pm.collectionVariables.set(\"nueva_tienda_id\", r.id_tienda);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/tiendas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tiendas"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/tiendas/{{nueva_tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tiendas",
+                    "{{nueva_tienda_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tiendas/{{nueva_tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tiendas",
+                    "{{nueva_tienda_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_tienda\": \"Tienda de prueba Postman (editada)\",\n  \"telefono_tienda\": \"22224444\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/tiendas/{{nueva_tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tiendas",
+                    "{{nueva_tienda_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Productos",
+          "item": [
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/productos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_producto\": \"Producto de prueba Postman\",\n  \"descripcion_producto\": \"Creado desde Postman\",\n  \"id_categoria\": \"{{categoria_id}}\",\n  \"id_marca\": \"{{marca_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "const r = pm.response.json();",
+                      "pm.collectionVariables.set(\"nuevo_producto_id\", r.id_producto);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{nuevo_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{nuevo_producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{nuevo_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{nuevo_producto_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"descripcion_producto\": \"Descripcion editada desde Postman\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{nuevo_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{nuevo_producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Ventas (eliminacion logica)",
+          "item": [
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"crud_venta_id\", pm.response.json().id_venta);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{crud_venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{crud_venta_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{crud_venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{crud_venta_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fecha_venta\": \"2026-01-15\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE (anula la venta, no la borra)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{crud_venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{crud_venta_id}}"
+                  ]
+                },
+                "description": "Eliminacion logica: la venta pasa a ANULADA (el enunciado permite cambiar el estado logico)."
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Queda ANULADA\", function () { pm.expect(pm.response.json().estado).to.eql(\"ANULADA\"); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Detalles de venta",
+          "item": [
+            {
+              "name": "Preparar venta",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"det_venta_id\", pm.response.json().id_venta);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "POST crear (usa el precio vigente de la tienda)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{det_venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.test(\"Subtotal calculado por el motor\", function () { const d = pm.response.json(); pm.expect(d.subtotal).to.be.closeTo(d.cantidad * d.precio_unitario, 0.01); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id (venta + producto)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta/{{det_venta_id}}/{{producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta",
+                    "{{det_venta_id}}",
+                    "{{producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar cantidad",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta/{{det_venta_id}}/{{producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta",
+                    "{{det_venta_id}}",
+                    "{{producto_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cantidad\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta/{{det_venta_id}}/{{producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta",
+                    "{{det_venta_id}}",
+                    "{{producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "Llave compuesta (id_venta, id_producto). PUT y DELETE no devuelven stock: el enunciado solo pide trigger de INSERT."
+        },
+        {
+          "name": "Pagos",
+          "item": [
+            {
+              "name": "Preparar venta",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"pago_venta_id\", pm.response.json().id_venta);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{pago_venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"nuevo_pago_id\", pm.response.json().id_pago);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos/{{nuevo_pago_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos",
+                    "{{nuevo_pago_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos/{{nuevo_pago_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos",
+                    "{{nuevo_pago_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monto_pagado\": 15\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/pagos/{{nuevo_pago_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos",
+                    "{{nuevo_pago_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Catalogo tienda-producto (stock por tienda)",
+          "item": [
+            {
+              "name": "Preparar producto",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/productos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_producto\": \"Producto catalogo prueba\",\n  \"id_categoria\": \"{{categoria_id}}\",\n  \"id_marca\": \"{{marca_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"cat_producto_id\", pm.response.json().id_producto);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "POST crear entrada de catalogo",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalogo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalogo"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_producto\": \"{{cat_producto_id}}\",\n  \"precio_vigente\": 10.5,\n  \"existencia_actual\": 20\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET listado",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/catalogo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalogo"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id (tienda + producto)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/catalogo/{{tienda_id}}/{{cat_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalogo",
+                    "{{tienda_id}}",
+                    "{{cat_producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar existencia",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/catalogo/{{tienda_id}}/{{cat_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalogo",
+                    "{{tienda_id}}",
+                    "{{cat_producto_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"existencia_actual\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE entrada de catalogo",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/catalogo/{{tienda_id}}/{{cat_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalogo",
+                    "{{tienda_id}}",
+                    "{{cat_producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Limpiar producto",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{cat_producto_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{cat_producto_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "description": "Cada subcarpeta crea un registro, lo consulta, lo modifica y lo elimina (guarda el id en una variable). Todas las operaciones pasan por la API."
+    },
+    {
+      "name": "3. Catalogos y demas tablas",
+      "item": [
+        {
+          "name": "GET Paises",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Departamentos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/departamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamentos"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Municipios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/municipios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "municipios"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Tipos de tienda",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tipos-tienda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-tienda"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Tipos de identificacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tipos-identificacion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-identificacion"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Cargos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cargos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cargos"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Marcas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/marcas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "marcas"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Estados de venta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/estados-venta",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "estados-venta"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Metodos de pago",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/metodos-pago",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metodos-pago"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Personas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CRUD completo de ejemplo: Marcas",
+          "item": [
+            {
+              "name": "POST crear",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/marcas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "marcas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_marca\": \"Marca Postman {{$timestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });",
+                      "pm.collectionVariables.set(\"nueva_marca_id\", pm.response.json().id_marca);"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GET por id",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/marcas/{{nueva_marca_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "marcas",
+                    "{{nueva_marca_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT actualizar",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/marcas/{{nueva_marca_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "marcas",
+                    "{{nueva_marca_id}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_marca\": \"Marca Postman editada {{$timestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE eliminar",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/marcas/{{nueva_marca_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "marcas",
+                    "{{nueva_marca_id}}"
+                  ]
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "description": "Todas las tablas tienen CRUD completo en la API (POST, GET, PUT, DELETE); aqui se listan y se muestra un ejemplo completo."
+    },
+    {
+      "name": "4. Reportes (consultan las vistas)",
+      "item": [
+        {
+          "name": "Vista_Ventas_Ubicacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reportes/ventas-ubicacion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reportes",
+                "ventas-ubicacion"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Una fila por tienda\", function () { pm.expect(pm.response.json().length).to.be.at.least(20); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Vista_Top_Productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reportes/top-productos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reportes",
+                "top-productos"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Vista_Saldos_Pendientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reportes/saldos-pendientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reportes",
+                "saldos-pendientes"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "tienda_id",
+      "value": "1"
+    },
+    {
+      "key": "empleado_id",
+      "value": "1"
+    },
+    {
+      "key": "cliente_id",
+      "value": "1"
+    },
+    {
+      "key": "producto_id",
+      "value": "108"
+    },
+    {
+      "key": "metodo_pago_id",
+      "value": "1"
+    },
+    {
+      "key": "municipio_id",
+      "value": "1"
+    },
+    {
+      "key": "tipo_tienda_id",
+      "value": "1"
+    },
+    {
+      "key": "tipo_identificacion_id",
+      "value": "1"
+    },
+    {
+      "key": "cargo_id",
+      "value": "1"
+    },
+    {
+      "key": "categoria_id",
+      "value": "1"
+    },
+    {
+      "key": "marca_id",
+      "value": "1"
+    }
+  ]
+}
