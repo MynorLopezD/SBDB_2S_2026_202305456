@@ -238,12 +238,15 @@ GO
 
 -- subtotal es una columna calculada y persistida: la regla "subtotal = cantidad
 -- por precio unitario" queda garantizada por el motor y la API no la calcula.
+-- Es DECIMAL(21,2) porque INT (10 digitos) x DECIMAL(10,2) nunca pasa de 21
+-- digitos: asi una cantidad enorme no desborda la columna antes de que el
+-- trigger Insert_Detalle la rechace con "Stock insuficiente".
 CREATE TABLE dbo.detalle_venta (
     id_venta         INT NOT NULL,
     id_producto      INT NOT NULL,
     cantidad         INT NOT NULL,
     precio_unitario  DECIMAL(10,2) NOT NULL,
-    subtotal         AS (CAST(cantidad * precio_unitario AS DECIMAL(10,2))) PERSISTED NOT NULL,
+    subtotal         AS (CAST(cantidad * precio_unitario AS DECIMAL(21,2))) PERSISTED NOT NULL,
     CONSTRAINT pk_detalle_venta PRIMARY KEY (id_venta, id_producto),
     CONSTRAINT fk_detventa_venta FOREIGN KEY (id_venta) REFERENCES dbo.venta (id_venta),
     CONSTRAINT fk_detventa_producto FOREIGN KEY (id_producto) REFERENCES dbo.producto (id_producto),

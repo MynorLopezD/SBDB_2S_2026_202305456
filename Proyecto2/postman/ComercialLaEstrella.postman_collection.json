@@ -1,38 +1,12 @@
 {
   "info": {
+    "_postman_id": "a2528073-9dc7-4eb9-8ddd-354c93f13c93",
     "name": "Comercial La Estrella - Fase 2",
     "description": "API REST (Node.js + Express) sobre SQL Server 2022.\n\nEjecutar con el Collection Runner en este orden: 1 (escenarios de triggers), 2 (CRUD), 3 (catalogos), 4 (reportes). La API debe estar corriendo en http://localhost:3000.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19459811"
   },
   "item": [
-    {
-      "name": "0. Health check",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/health",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "health"
-          ]
-        }
-      },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-            ]
-          }
-        }
-      ]
-    },
     {
       "name": "1. Escenarios de validacion (triggers)",
       "item": [
@@ -41,35 +15,6 @@
           "item": [
             {
               "name": "Crear venta de prueba",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/ventas",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "ventas"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "description": "Crea la venta sobre la que se ejecutan los tres escenarios. Se guarda su id en la variable venta_id."
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -83,7 +28,36 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                },
+                "description": "Crea la venta sobre la que se ejecutan los tres escenarios. Se guarda su id en la variable venta_id."
+              },
+              "response": []
             }
           ]
         },
@@ -92,27 +66,6 @@
           "item": [
             {
               "name": "1.1 GET existencia ANTES",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "productos",
-                    "{{producto_id}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "tienda",
-                      "value": "{{tienda_id}}"
-                    }
-                  ]
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -126,39 +79,31 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "1.2 POST detalle con cantidad MAYOR a la existencia",
+              ],
               "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
+                "method": "GET",
+                "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/detalles-venta",
+                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "detalles-venta"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 999999,\n  \"precio_unitario\": 100\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                    "productos",
+                    "{{producto_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tienda",
+                      "value": "{{tienda_id}}"
                     }
-                  }
-                },
-                "description": "El trigger Insert_Detalle aborta la transaccion; la API traduce el error a HTTP 400 'Stock insuficiente'."
+                  ]
+                }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "1.2 POST detalle con cantidad MAYOR a la existencia",
               "event": [
                 {
                   "listen": "test",
@@ -170,31 +115,39 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "1.3 GET existencia (no debe cambiar)",
+              ],
               "request": {
-                "method": "GET",
-                "header": [],
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 999999,\n  \"precio_unitario\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
+                  "raw": "{{baseUrl}}/detalles-venta",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "productos",
-                    "{{producto_id}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "tienda",
-                      "value": "{{tienda_id}}"
-                    }
+                    "detalles-venta"
                   ]
-                }
+                },
+                "description": "El trigger Insert_Detalle aborta la transaccion; la API traduce el error a HTTP 400 'Stock insuficiente'."
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "1.3 GET existencia (no debe cambiar)",
               "event": [
                 {
                   "listen": "test",
@@ -206,59 +159,7 @@
                     ]
                   }
                 }
-              ]
-            }
-          ],
-          "description": "Pide mas unidades de las que hay: la base debe rechazar la operacion."
-        },
-        {
-          "name": "Escenario 2 - Inventario (exito)",
-          "item": [
-            {
-              "name": "2.1 POST detalle con cantidad valida (3 unidades)",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/detalles-venta",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "detalles-venta"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 3,\n  \"precio_unitario\": 100\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"HTTP 201 Created\", function () { pm.response.to.have.status(201); });",
-                      "pm.test(\"Subtotal = 3 x 100\", function () { pm.expect(pm.response.json().subtotal).to.eql(300); });"
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "2.2 GET existencia DESPUES (debe bajar 3)",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -279,7 +180,59 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            }
+          ],
+          "description": "Pide mas unidades de las que hay: la base debe rechazar la operacion."
+        },
+        {
+          "name": "Escenario 2 - Inventario (exito)",
+          "item": [
+            {
+              "name": "2.1 POST detalle con cantidad valida (3 unidades)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"HTTP 201 Created\", function () { pm.response.to.have.status(201); });",
+                      "pm.test(\"Subtotal = 3 x 100\", function () { pm.expect(pm.response.json().subtotal).to.eql(300); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 3,\n  \"precio_unitario\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "2.2 GET existencia DESPUES (debe bajar 3)",
               "event": [
                 {
                   "listen": "test",
@@ -291,7 +244,28 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/productos/{{producto_id}}?tienda={{tienda_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{producto_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tienda",
+                      "value": "{{tienda_id}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
             }
           ],
           "description": "Con una cantidad valida el trigger descuenta el inventario."
@@ -301,34 +275,6 @@
           "item": [
             {
               "name": "3.1 POST abono parcial #1 (100 de 300)",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/pagos",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pagos"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -340,25 +286,38 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "3.2 GET venta (sigue REGISTRADA)",
+              ],
               "request": {
-                "method": "GET",
-                "header": [],
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "raw": "{{baseUrl}}/ventas/{{venta_id}}",
+                  "raw": "{{baseUrl}}/pagos",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "ventas",
-                    "{{venta_id}}"
+                    "pagos"
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "3.2 GET venta (sigue REGISTRADA)",
               "event": [
                 {
                   "listen": "test",
@@ -370,52 +329,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "3.3 POST abono parcial #2 (200 de 300)",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/pagos",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pagos"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "3.4 GET venta (sigue REGISTRADA)",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -430,7 +344,52 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "3.3 POST abono parcial #2 (200 de 300)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "3.4 GET venta (sigue REGISTRADA)",
               "event": [
                 {
                   "listen": "test",
@@ -442,52 +401,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "3.5 POST pago que cubre el total (300 de 300)",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/pagos",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pagos"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "3.6 GET venta (debe estar PAGADA)",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -502,7 +416,52 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "3.5 POST pago que cubre el total (300 de 300)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 201\", function () { pm.response.to.have.status(201); });"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "3.6 GET venta (debe estar PAGADA)",
               "event": [
                 {
                   "listen": "test",
@@ -514,10 +473,37 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/ventas/{{venta_id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas",
+                    "{{venta_id}}"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "3.7 GET saldos pendientes (la venta ya no aparece)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"La venta pagada salio de Vista_Saldos_Pendientes\", function () { const id = parseInt(pm.collectionVariables.get(\"venta_id\"), 10); pm.expect(pm.response.json().some(function (f) { return f.numero_venta === id; })).to.eql(false); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -532,19 +518,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                      "pm.test(\"La venta pagada salio de Vista_Saldos_Pendientes\", function () { const id = parseInt(pm.collectionVariables.get(\"venta_id\"), 10); pm.expect(pm.response.json().some(function (f) { return f.numero_venta === id; })).to.eql(false); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ],
           "description": "Abonos parciales: la venta cambia a PAGADA solo cuando la suma de pagos cubre el total."
@@ -560,34 +534,6 @@
           "item": [
             {
               "name": "POST crear",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/clientes",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "clientes"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombres\": \"Prueba\",\n  \"apellidos\": \"Postman\",\n  \"telefono\": \"55501234\",\n  \"correo\": \"prueba.postman.{{$timestamp}}@correo.com\",\n  \"direccion\": \"Zona 1, Ciudad\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"id_tipo_identificacion\": \"{{tipo_identificacion_id}}\",\n  \"numero_identificacion\": \"{{$timestamp}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -600,10 +546,50 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombres\": \"Prueba\",\n  \"apellidos\": \"Postman\",\n  \"telefono\": \"55501234\",\n  \"correo\": \"prueba.postman.{{$timestamp}}@correo.com\",\n  \"direccion\": \"Zona 1, Ciudad\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"id_tipo_identificacion\": \"{{tipo_identificacion_id}}\",\n  \"numero_identificacion\": \"{{$timestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/clientes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clientes"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -617,22 +603,21 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -647,7 +632,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -658,10 +646,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -670,6 +655,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telefono\": \"55509999\",\n  \"direccion\": \"Zona 10, Ciudad\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/clientes/{{nuevo_cliente_id}}",
                   "host": [
@@ -679,18 +673,12 @@
                     "clientes",
                     "{{nuevo_cliente_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"telefono\": \"55509999\",\n  \"direccion\": \"Zona 10, Ciudad\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -701,10 +689,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -719,18 +704,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         },
@@ -739,34 +713,6 @@
           "item": [
             {
               "name": "POST crear",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/empleados",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "empleados"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombres\": \"Prueba\",\n  \"apellidos\": \"Postman\",\n  \"telefono\": \"55501234\",\n  \"correo\": \"empleado.postman.{{$timestamp}}@correo.com\",\n  \"direccion\": \"Zona 1, Ciudad\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"fecha_contratacion\": \"2024-01-15\",\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_cargo\": \"{{cargo_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -779,10 +725,50 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombres\": \"Prueba\",\n  \"apellidos\": \"Postman\",\n  \"telefono\": \"55501234\",\n  \"correo\": \"empleado.postman.{{$timestamp}}@correo.com\",\n  \"direccion\": \"Zona 1, Ciudad\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"fecha_contratacion\": \"2024-01-15\",\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_cargo\": \"{{cargo_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/empleados",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "empleados"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -796,22 +782,21 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -826,7 +811,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -837,10 +825,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -849,6 +834,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telefono\": \"55508888\",\n  \"id_cargo\": \"{{cargo_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/empleados/{{nuevo_empleado_id}}",
                   "host": [
@@ -858,18 +852,12 @@
                     "empleados",
                     "{{nuevo_empleado_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"telefono\": \"55508888\",\n  \"id_cargo\": \"{{cargo_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -880,10 +868,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -898,18 +883,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         },
@@ -918,34 +892,6 @@
           "item": [
             {
               "name": "POST crear",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/tiendas",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "tiendas"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre_tienda\": \"Tienda de prueba Postman\",\n  \"direccion_tienda\": \"Avenida Central 1-23\",\n  \"telefono_tienda\": \"22223333\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"id_tipo_tienda\": \"{{tipo_tienda_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -958,10 +904,50 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_tienda\": \"Tienda de prueba Postman\",\n  \"direccion_tienda\": \"Avenida Central 1-23\",\n  \"telefono_tienda\": \"22223333\",\n  \"id_municipio\": \"{{municipio_id}}\",\n  \"id_tipo_tienda\": \"{{tipo_tienda_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tiendas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tiendas"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -975,22 +961,21 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1005,7 +990,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -1016,10 +1004,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -1028,6 +1013,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_tienda\": \"Tienda de prueba Postman (editada)\",\n  \"telefono_tienda\": \"22224444\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/tiendas/{{nueva_tienda_id}}",
                   "host": [
@@ -1037,18 +1031,12 @@
                     "tiendas",
                     "{{nueva_tienda_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre_tienda\": \"Tienda de prueba Postman (editada)\",\n  \"telefono_tienda\": \"22224444\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -1059,10 +1047,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -1077,18 +1062,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         },
@@ -1097,34 +1071,6 @@
           "item": [
             {
               "name": "POST crear",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/productos",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "productos"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre_producto\": \"Producto de prueba Postman\",\n  \"descripcion_producto\": \"Creado desde Postman\",\n  \"id_categoria\": \"{{categoria_id}}\",\n  \"id_marca\": \"{{marca_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -1137,10 +1083,50 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_producto\": \"Producto de prueba Postman\",\n  \"descripcion_producto\": \"Creado desde Postman\",\n  \"id_categoria\": \"{{categoria_id}}\",\n  \"id_marca\": \"{{marca_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/productos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1154,22 +1140,21 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                      "pm.test(\"Devuelve un arreglo\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1184,7 +1169,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -1195,10 +1183,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -1207,6 +1192,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"descripcion_producto\": \"Descripcion editada desde Postman\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/productos/{{nuevo_producto_id}}",
                   "host": [
@@ -1216,18 +1210,12 @@
                     "productos",
                     "{{nuevo_producto_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"descripcion_producto\": \"Descripcion editada desde Postman\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -1238,10 +1226,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -1256,18 +1241,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         },
@@ -1276,34 +1250,6 @@
           "item": [
             {
               "name": "POST crear",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/ventas",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "ventas"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -1315,10 +1261,49 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1332,7 +1317,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id",
               "event": [
                 {
                   "listen": "test",
@@ -1343,10 +1331,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1361,7 +1346,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -1372,10 +1360,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -1384,6 +1369,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fecha_venta\": \"2026-01-15\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/ventas/{{crud_venta_id}}",
                   "host": [
@@ -1393,32 +1387,24 @@
                     "ventas",
                     "{{crud_venta_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fecha_venta\": \"2026-01-15\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE (anula la venta, no la borra)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                      "pm.test(\"Queda ANULADA\", function () { pm.expect(pm.response.json().estado).to.eql(\"ANULADA\"); });"
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE (anula la venta, no la borra)",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -1434,19 +1420,7 @@
                 },
                 "description": "Eliminacion logica: la venta pasa a ANULADA (el enunciado permite cambiar el estado logico)."
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                      "pm.test(\"Queda ANULADA\", function () { pm.expect(pm.response.json().estado).to.eql(\"ANULADA\"); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         },
@@ -1455,34 +1429,6 @@
           "item": [
             {
               "name": "Preparar venta",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/ventas",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "ventas"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -1494,10 +1440,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "POST crear (usa el precio vigente de la tienda)",
+              ],
               "request": {
                 "method": "POST",
                 "header": [
@@ -1506,26 +1449,29 @@
                     "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{baseUrl}}/detalles-venta",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "detalles-venta"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{det_venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 1\n}",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "POST crear (usa el precio vigente de la tienda)",
               "event": [
                 {
                   "listen": "test",
@@ -1537,10 +1483,49 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{det_venta_id}}\",\n  \"id_producto\": \"{{producto_id}}\",\n  \"cantidad\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/detalles-venta",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "detalles-venta"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1554,7 +1539,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id (venta + producto)",
               "event": [
                 {
                   "listen": "test",
@@ -1565,10 +1553,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id (venta + producto)",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1584,7 +1569,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar cantidad",
               "event": [
                 {
                   "listen": "test",
@@ -1595,10 +1583,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar cantidad",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -1607,6 +1592,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cantidad\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/detalles-venta/{{det_venta_id}}/{{producto_id}}",
                   "host": [
@@ -1617,18 +1611,12 @@
                     "{{det_venta_id}}",
                     "{{producto_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"cantidad\": 2\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -1639,10 +1627,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -1658,18 +1643,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ],
           "description": "Llave compuesta (id_venta, id_producto). PUT y DELETE no devuelven stock: el enunciado solo pide trigger de INSERT."
@@ -1679,34 +1653,6 @@
           "item": [
             {
               "name": "Preparar venta",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/ventas",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "ventas"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -1718,10 +1664,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "POST crear",
+              ],
               "request": {
                 "method": "POST",
                 "header": [
@@ -1730,26 +1673,29 @@
                     "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{baseUrl}}/pagos",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pagos"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"id_venta\": \"{{pago_venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 10\n}",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_empleado\": \"{{empleado_id}}\",\n  \"id_cliente\": \"{{cliente_id}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ventas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ventas"
+                  ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "POST crear",
               "event": [
                 {
                   "listen": "test",
@@ -1761,10 +1707,49 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_venta\": \"{{pago_venta_id}}\",\n  \"id_metodo_pago\": \"{{metodo_pago_id}}\",\n  \"monto_pagado\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/pagos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagos"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1778,7 +1763,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id",
               "event": [
                 {
                   "listen": "test",
@@ -1789,10 +1777,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1807,7 +1792,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -1818,10 +1806,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -1830,6 +1815,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monto_pagado\": 15\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/pagos/{{nuevo_pago_id}}",
                   "host": [
@@ -1839,18 +1833,12 @@
                     "pagos",
                     "{{nuevo_pago_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"monto_pagado\": 15\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -1861,10 +1849,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -1879,18 +1864,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         },
@@ -1899,34 +1873,6 @@
           "item": [
             {
               "name": "Preparar producto",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/productos",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "productos"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre_producto\": \"Producto catalogo prueba\",\n  \"id_categoria\": \"{{categoria_id}}\",\n  \"id_marca\": \"{{marca_id}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -1938,10 +1884,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "POST crear entrada de catalogo",
+              ],
               "request": {
                 "method": "POST",
                 "header": [
@@ -1950,26 +1893,29 @@
                     "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{baseUrl}}/catalogo",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "catalogo"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_producto\": \"{{cat_producto_id}}\",\n  \"precio_vigente\": 10.5,\n  \"existencia_actual\": 20\n}",
+                  "raw": "{\n  \"nombre_producto\": \"Producto catalogo prueba\",\n  \"id_categoria\": \"{{categoria_id}}\",\n  \"id_marca\": \"{{marca_id}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/productos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "productos"
+                  ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "POST crear entrada de catalogo",
               "event": [
                 {
                   "listen": "test",
@@ -1980,10 +1926,49 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id_tienda\": \"{{tienda_id}}\",\n  \"id_producto\": \"{{cat_producto_id}}\",\n  \"precio_vigente\": 10.5,\n  \"existencia_actual\": 20\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/catalogo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "catalogo"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET listado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -1997,7 +1982,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "GET por id (tienda + producto)",
               "event": [
                 {
                   "listen": "test",
@@ -2008,10 +1996,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "GET por id (tienda + producto)",
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -2027,7 +2012,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar existencia",
               "event": [
                 {
                   "listen": "test",
@@ -2038,10 +2026,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar existencia",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -2050,6 +2035,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"existencia_actual\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/catalogo/{{tienda_id}}/{{cat_producto_id}}",
                   "host": [
@@ -2060,18 +2054,12 @@
                     "{{tienda_id}}",
                     "{{cat_producto_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"existencia_actual\": 25\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE entrada de catalogo",
               "event": [
                 {
                   "listen": "test",
@@ -2082,10 +2070,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE entrada de catalogo",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -2101,7 +2086,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "Limpiar producto",
               "event": [
                 {
                   "listen": "test",
@@ -2112,10 +2100,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "Limpiar producto",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -2130,18 +2115,7 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
         }
@@ -2152,346 +2126,10 @@
       "name": "3. Catalogos y demas tablas",
       "item": [
         {
-          "name": "GET Paises",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/paises",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "paises"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Departamentos",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/departamentos",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "departamentos"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Municipios",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/municipios",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "municipios"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Tipos de tienda",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/tipos-tienda",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "tipos-tienda"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Tipos de identificacion",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/tipos-identificacion",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "tipos-identificacion"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Cargos",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/cargos",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "cargos"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Categorias",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/categorias",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "categorias"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Marcas",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/marcas",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "marcas"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Estados de venta",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/estados-venta",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "estados-venta"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Metodos de pago",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/metodos-pago",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "metodos-pago"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "GET Personas",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/personas",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "personas"
-              ]
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
-        },
-        {
           "name": "CRUD completo de ejemplo: Marcas",
           "item": [
             {
               "name": "POST crear",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/marcas",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "marcas"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre_marca\": \"Marca Postman {{$timestamp}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": [],
               "event": [
                 {
                   "listen": "test",
@@ -2503,10 +2141,49 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_marca\": \"Marca Postman {{$timestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/marcas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "marcas"
+                  ]
+                }
+              },
+              "response": []
             },
             {
               "name": "GET por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -2521,7 +2198,10 @@
                   ]
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "PUT actualizar",
               "event": [
                 {
                   "listen": "test",
@@ -2532,10 +2212,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "PUT actualizar",
+              ],
               "request": {
                 "method": "PUT",
                 "header": [
@@ -2544,6 +2221,15 @@
                     "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_marca\": \"Marca Postman editada {{$timestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
                   "raw": "{{baseUrl}}/marcas/{{nueva_marca_id}}",
                   "host": [
@@ -2553,18 +2239,12 @@
                     "marcas",
                     "{{nueva_marca_id}}"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre_marca\": \"Marca Postman editada {{$timestamp}}\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
-              "response": [],
+              "response": []
+            },
+            {
+              "name": "DELETE eliminar",
               "event": [
                 {
                   "listen": "test",
@@ -2575,10 +2255,7 @@
                     ]
                   }
                 }
-              ]
-            },
-            {
-              "name": "DELETE eliminar",
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -2593,20 +2270,317 @@
                   ]
                 }
               },
-              "response": [],
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                    ]
-                  }
-                }
-              ]
+              "response": []
             }
           ]
+        },
+        {
+          "name": "GET Paises",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Departamentos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/departamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Municipios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/municipios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "municipios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Tipos de tienda",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tipos-tienda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-tienda"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Tipos de identificacion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tipos-identificacion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-identificacion"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Cargos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cargos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cargos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Categorias",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Marcas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/marcas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "marcas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Estados de venta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/estados-venta",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "estados-venta"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Metodos de pago",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/metodos-pago",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metodos-pago"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Personas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
         }
       ],
       "description": "Todas las tablas tienen CRUD completo en la API (POST, GET, PUT, DELETE); aqui se listan y se muestra un ejemplo completo."
@@ -2616,6 +2590,18 @@
       "item": [
         {
           "name": "Vista_Ventas_Ubicacion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Una fila por tienda\", function () { pm.expect(pm.response.json().length).to.be.at.least(20); });"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -2630,22 +2616,21 @@
               ]
             }
           },
-          "response": [],
+          "response": []
+        },
+        {
+          "name": "Vista_Top_Productos",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Una fila por tienda\", function () { pm.expect(pm.response.json().length).to.be.at.least(20); });"
+                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
                 ]
               }
             }
-          ]
-        },
-        {
-          "name": "Vista_Top_Productos",
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -2660,7 +2645,10 @@
               ]
             }
           },
-          "response": [],
+          "response": []
+        },
+        {
+          "name": "Vista_Saldos_Pendientes",
           "event": [
             {
               "listen": "test",
@@ -2671,10 +2659,7 @@
                 ]
               }
             }
-          ]
-        },
-        {
-          "name": "Vista_Saldos_Pendientes",
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -2689,20 +2674,37 @@
               ]
             }
           },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
-                ]
-              }
-            }
-          ]
+          "response": []
         }
       ]
+    },
+    {
+      "name": "0. Health check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Codigo 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "variable": [
@@ -2753,6 +2755,14 @@
     {
       "key": "marca_id",
       "value": "1"
+    },
+    {
+      "key": "venta_id",
+      "value": ""
+    },
+    {
+      "key": "stock_antes",
+      "value": ""
     }
   ]
 }

@@ -2,8 +2,10 @@
 
 Backend de Comercial La Estrella: **SQL Server 2022 en Docker** (con triggers y vistas en T-SQL) y un **API REST en Node.js + Express** que es la única vía para manipular los datos.
 
+- Estudiante: Mynor Roberto Lopez Diaz
 - Carné: 202305456
 - Curso: Bases de Datos 1 — Proyecto Fase 2
+- Repositorio: https://github.com/MynorLopezD/SBDB_2S_2026_202305456 (carpeta `Proyecto2/`)
 
 ## Contenido del proyecto
 
@@ -27,6 +29,18 @@ capturas/                 evidencia del funcionamiento de los triggers
 | DBeaver | Solo para **verificar la estructura (solo lectura)** |
 
 Puertos libres: **1433** (SQL Server) y **3000** (API).
+
+## Variables de entorno (`.env`)
+
+El archivo `.env` de la raíz lo leen tanto `docker-compose.yml` como la API (`api/src/db.js`); no hace falta copiarlo ni crear otro.
+
+| Variable | Valor | La usa |
+|---|---|---|
+| `MSSQL_SA_PASSWORD` | `Estrella2026!` | docker-compose (contraseña de `sa`) y la API |
+| `DB_NAME` | `ComercialLaEstrella` | API |
+| `DB_HOST` | `localhost` | API |
+| `DB_PORT` | `1433` | API |
+| `API_PORT` | `3000` | API |
 
 ## Paso 1 — Levantar SQL Server
 
@@ -125,6 +139,12 @@ GET http://localhost:3000/api/health      →  {"estado":"ok","base_de_datos":"C
 
 Cada corrida crea una venta nueva y consume 3 unidades de stock del producto de prueba. Para volver al estado original: `docker compose down -v` y `docker compose up -d`.
 
+## Detener el entorno
+
+- API: `Ctrl + C` en la terminal donde corre `npm start`.
+- Base de datos: `docker compose down` apaga los contenedores y **conserva** los datos (volumen `sqlserver_data`); al volver a levantar, `db-init` detecta que la base ya existe y no la reinicia.
+- `docker compose down -v` apaga y **borra** el volumen: el siguiente `docker compose up -d` vuelve a ejecutar `init.sql` desde cero.
+
 ## Evidencia del funcionamiento de los triggers
 
 Capturas de Postman (petición + respuesta) guardadas en `capturas/`:
@@ -142,6 +162,7 @@ Capturas de Postman (petición + respuesta) guardadas en `capturas/`:
 
 ![Escenario 3 - abono parcial](capturas/escenario3_abono_parcial.png)
 ![Escenario 3 - venta PAGADA](capturas/escenario3_venta_pagada.png)
+![Escenario 3 - los tres pagos de la venta](capturas/escenario3_venta_pagada2.png)
 
 ## Endpoints
 
@@ -163,11 +184,32 @@ Todas las tablas tienen CRUD completo: `GET /` (listado), `GET /:id`, `POST /`, 
 
 Errores: `400` datos inválidos o trigger (`Stock insuficiente`), `404` no existe, `409` duplicado o registro referenciado por otros, `503` sin conexión a la base.
 
+### Ejemplos de peticiones (flujo de una venta)
+
+Todas con `Content-Type: application/json` sobre `http://localhost:3000/api`.
+
+```
+POST /ventas            { "id_tienda": 1, "id_empleado": 1, "id_cliente": 1 }
+                        → 201 { "id_venta": 1501, "estado": "REGISTRADA", "total_venta": 0, "total_pagado": 0, … }
+                          (fecha_venta es opcional: por defecto la fecha de hoy)
+
+POST /detalles-venta    { "id_venta": 1501, "id_producto": 108, "cantidad": 3 }
+                        → 201 { "id_venta": 1501, "id_producto": 108, "cantidad": 3, "precio_unitario": 231.22, "subtotal": 693.66 }
+                          (precio_unitario es opcional: por defecto el precio vigente en la tienda de la venta)
+                        con cantidad mayor a la existencia → 400 { "error": "Stock insuficiente" }
+
+POST /pagos             { "id_venta": 1501, "id_metodo_pago": 1, "monto_pagado": 100 }
+                        → 201 { "id_pago": …, "id_venta": 1501, "id_metodo_pago": 1, "monto_pagado": 100 }
+
+GET  /ventas/1501       → estado "PAGADA" cuando la suma de los pagos alcanza el total
+GET  /productos/108?tienda=1 → existencia_actual del producto en esa tienda
+```
+
 ## Decisiones de diseño
 
 - **El stock es por tienda.** Se conserva el modelo aprobado en la Fase 1: `existencia_actual` y `precio_vigente` viven en `catalogo_tienda_producto`. El trigger `Insert_Detalle` valida y descuenta el stock de la tienda donde se registró la venta. Si el producto no está en el catálogo de esa tienda, se rechaza con otro error.
 - **Los datos iniciales** del dataset se cargan dentro de `init.sql` **antes** de crear los triggers; así el histórico no altera el inventario.
-- **`subtotal`** es una columna calculada y persistida (`cantidad × precio_unitario`): el motor garantiza la regla.
+- **`subtotal`** es una columna calculada y persistida (`cantidad × precio_unitario`): el motor garantiza la regla. Es `DECIMAL(21,2)` para que ninguna cantidad, por grande que sea, desborde la columna antes de que el trigger responda «Stock insuficiente».
 - **Diferencias frente a Oracle:** `UNIQUE(correo)` pasa a un índice único filtrado (SQL Server solo admite un NULL por columna); `fecha_contratacion <= hoy` ahora sí es un `CHECK` (`GETDATE()` está permitido).
 - **Las vistas** no llevan `ORDER BY` (no se permite en T-SQL); el orden lo aplica cada endpoint.
 - **Los triggers** trabajan por conjuntos sobre `inserted` (SQL Server dispara una vez por sentencia, no por fila). Los errores usan números propios (`50001`, `50002`) que la API traduce a HTTP.
